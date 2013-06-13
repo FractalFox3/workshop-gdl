@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Este aplicacion representa a una entidad crediticia la cual
  * concentra todos los creditos otorgados a los clientes de
  * diferentes entidades.
@@ -21,21 +21,21 @@ void doprocessing (int sock)
 
     memset(&(buffer), '0', 256);
     int recvMsgSize;
-    
+    printf("entro");
     /* Receive message from client */
     if ((recvMsgSize = recv(sock, buffer, 256, 0)) < 0)
-        perror("ERROR reading to socket");
-
+        perror("ERROR reading to socket 1");
+  //printf("%s",buffer);
     /* Send received string and receive again until end of transmission */
     while (recvMsgSize > 0)      /* zero indicates end of transmission */
     {
         /* Echo message back to client */
         if (send(sock, buffer, recvMsgSize, 0) != recvMsgSize)
-            perror("ERROR writing to socket");
+            perror("ERROR writing to socket 2");
 
         /* See if there is more data to receive */
-        if ((recvMsgSize = recv(sock, buffer, 256, 0)) < 0)
-            perror("ERROR reading to socket");
+        if ((recvMsgSize = recv(sock, buffer, 256, 0)) > 0)
+            perror("ERROR reading to socket 3");
     }
 
     closesocket(sock);    /* Close client socket */
@@ -122,10 +122,10 @@ int main()
          exit(-1);
       }
 
-      printf("Se obtuvo una conexión desde %s\n", inet_ntoa(client.sin_addr) );
+      printf("Se obtuvo una conexion desde %s\n", inet_ntoa(client.sin_addr) );
       /* que mostrará la IP del cliente */
 
-      send(fd2,"Bienvenido a mi servidor.\n",22,0);
+      send(fd2,"Bienvenido a mi servidor.\n",256,0);
       /* que enviará el mensaje de bienvenida al cliente */
       
       doprocessing(fd2);
